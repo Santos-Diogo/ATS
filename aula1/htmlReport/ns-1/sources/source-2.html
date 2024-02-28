@@ -1,0 +1,200 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Poligono</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: Poligono (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Poligono</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    37.5%
+  </span>
+  <span class="absValue">
+    (3/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    24.2%
+  </span>
+  <span class="absValue">
+    (8/33)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;
+&nbsp;/**
+&nbsp; * Write a description of class Poligono here.
+&nbsp; * 
+&nbsp; * @author João Saraiva
+&nbsp; * @version 6/2018
+&nbsp; */
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;import java.util.ArrayList;
+&nbsp;
+&nbsp;public abstract class Poligono
+&nbsp;{
+&nbsp;    private List&lt;Ponto&gt; poligono;
+&nbsp;    
+&nbsp;    public Poligono()
+<b class="fc">&nbsp;    { this.poligono = new ArrayList&lt;&gt;();</b>
+&nbsp;    }
+&nbsp;    
+&nbsp;    public Poligono(List&lt;Ponto&gt; pol)
+<b class="nc">&nbsp;    {  this();</b>
+<b class="nc">&nbsp;       for (Ponto p : pol)</b>
+<b class="nc">&nbsp;         this.poligono.add(p.clone());</b>
+<b class="nc">&nbsp;       this.poligono.add(pol.get(0).clone());</b>
+&nbsp;    }
+&nbsp;    
+&nbsp;    
+&nbsp;    public List&lt;Ponto&gt; getPoligono()
+<b class="nc">&nbsp;    { List&lt;Ponto&gt; pts = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;      for (Ponto p : this.poligono)</b>
+<b class="nc">&nbsp;        pts.add(p.clone());</b>
+<b class="nc">&nbsp;      return pts;</b>
+&nbsp;    }
+&nbsp;    
+&nbsp;    public void setPoligono(List&lt;Ponto&gt; pts)
+<b class="fc">&nbsp;    { this.poligono = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;      for (Ponto p : pts)</b>
+<b class="fc">&nbsp;        this.poligono.add(p.clone());</b>
+&nbsp;    }
+&nbsp;    
+&nbsp;    
+&nbsp;    public void addPonto(Ponto p)
+<b class="nc">&nbsp;    { this.poligono.add(p.clone()); }</b>
+&nbsp;    
+&nbsp;    public boolean fechada()
+<b class="nc">&nbsp;    { return this.poligono.get(0).equals(this.poligono.get(this.poligono.size()-1));</b>
+&nbsp;    }
+&nbsp;    
+&nbsp;    public double perimetro()
+<b class="fc">&nbsp;    { double res = 0;</b>
+<b class="fc">&nbsp;      for (int i = 1 ; i &lt; this.poligono.size() ; i++)</b>
+<b class="fc">&nbsp;        res += this.poligono.get(i).distancia(this.poligono.get(i-1));</b>
+<b class="fc">&nbsp;      return res;</b>
+&nbsp;    }
+&nbsp;    
+&nbsp;       
+&nbsp;/*
+&nbsp;codigo re-utilizado de 
+&nbsp;
+&nbsp;https://stackoverflow.com/questions/471962/how-do-i-efficiently-determine-if-a-polygon-is-convex-non-convex-or-complex
+&nbsp;
+&nbsp;
+&nbsp;The algorithm is guaranteed to work as long as the vertices are ordered (either clockwise or counter-clockwise), 
+&nbsp;and you don&#39;t have self-intersecting edges (i.e. it only works for simple polygons)
+&nbsp;*/
+&nbsp;
+&nbsp;    public boolean eConvexo()
+&nbsp;    {  
+<b class="nc">&nbsp;       if (this.poligono.size() &lt; 4)     // Triangulo é sempre convexo</b>
+<b class="nc">&nbsp;         return true;</b>
+&nbsp;
+<b class="nc">&nbsp;       boolean sign = false;</b>
+<b class="nc">&nbsp;       int n = this.poligono.size();</b>
+&nbsp;
+<b class="nc">&nbsp;       for(int i = 0; i &lt; n; i++)</b>
+<b class="nc">&nbsp;         {  double dx1 = poligono.get((i + 2) % n).getX() - poligono.get((i + 1) % n).getX();</b>
+<b class="nc">&nbsp;            double dy1 = poligono.get((i + 2) % n).getY() - poligono.get((i + 1) % n).getY();</b>
+<b class="nc">&nbsp;            double dx2 = poligono.get(i).getX() - poligono.get((i + 1) % n).getX();</b>
+<b class="nc">&nbsp;            double dy2 = poligono.get(i).getY() - poligono.get((i + 1) % n).getY();</b>
+<b class="nc">&nbsp;            double zcrossproduct = dx1 * dy2 - dy1 * dx2;</b>
+<b class="nc">&nbsp;            if (i == 0)</b>
+<b class="nc">&nbsp;	       sign = zcrossproduct &gt; 0;</b>
+<b class="nc">&nbsp;            else { if (sign != (zcrossproduct &gt; 0))</b>
+<b class="nc">&nbsp;                     return false;</b>
+&nbsp;                 }
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;       return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public abstract double area();
+&nbsp;       
+&nbsp;    public abstract Poligono clone();
+&nbsp;    
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-02-14 12:19</div>
+</div>
+</body>
+</html>
