@@ -37,7 +37,7 @@ isBST (Node l x r) = isBST l && isBST r
 
 balanced :: BST -> Bool
 balanced Empty = True 
-balanced (Node b1 n b2)= abs (heightBST(b1)- heightBST(b2))< 2 && balanced b1 && balanced b2
+balanced (Node b1 n b2)= (abs (heightBST(b1)- heightBST(b2))< 2) && balanced b1 && balanced b2
 
 heightBST :: BST-> Int
 heightBST Empty= 0
@@ -59,5 +59,5 @@ fromListBalanced l =
  
 genBSTValidOrd:: Gen BST
 genBSTValidOrd = do
-  listInt<- listOf(choose(1,1000))
+  listInt<- listOf1(choose(1,1000))
   return (fromList(sort listInt))
